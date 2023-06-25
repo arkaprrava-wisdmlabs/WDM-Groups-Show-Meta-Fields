@@ -13,15 +13,20 @@
  */
 if(!class_exists('WDM_Groups_Show_Meta_Fields')){
     class WDM_Groups_Show_Meta_Fields{
-        public function __construct(){
-            
+        protected $plugin_dir_url;
+        public function __construct($plugin_dir_url){
+            $this->plugin_dir_url = $plugin_dir_url;
+            $this->define_admin_hooks();
+            $this->define_public_hooks();
         }
         public function define_admin_hooks(){
-
+            require_once $this->plugin_dir_url.'admin\class-wdm-groups-show-meta-fields-admin.php';
+            $admin = new WDM_Groups_Show_Meta_Fields_Admin();
         }
         public function define_public_hooks(){
-
+            require_once $this->plugin_dir_url.'public\class-wdm-groups-show-meta-fields-public.php';
+            $public = new WDM_Groups_Show_Meta_Fields_Public();
         }
     }
 }
-new WDM_Groups_Show_Meta_Fields();
+new WDM_Groups_Show_Meta_Fields(plugin_dir_url( __FILE__ ));
