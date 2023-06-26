@@ -31,6 +31,7 @@ if(!class_exists('WDM_Groups_Show_Meta_Fields')){
             require_once $this->plugin_dir_path.'public\class-wdm-groups-show-meta-fields-public.php';
             $public = new WDM_Groups_Show_Meta_Fields_Public();
             add_action( 'thwcfd_order_details_after_custom_fields_table', array( $public, 'wdm_show_custom_fields' ), 20, 1 );
+            add_filter( 'woocommerce_form_field_args', array($public, 'wdm_change_demo_field_options'), 10, 3 );
         }
     }
 }
