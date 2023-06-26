@@ -2,7 +2,7 @@
 if(!class_exists('WDM_Groups_Show_Meta_Fields_Public')){
     class WDM_Groups_Show_Meta_Fields_Public{
         public function wdm_show_custom_fields($order){
-            $order_id = THWCFD_Utils::get_order_id( $order );
+            $order_id = $order -> ID;
             $group_arr = get_post_meta( $order_id, 'inmedwdm_user_register_group', true );
             $val = 0;
             foreach( $group_arr as $key => $value ){

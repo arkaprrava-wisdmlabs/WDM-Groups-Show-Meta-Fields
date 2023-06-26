@@ -11,7 +11,7 @@ if(!class_exists('WDM_Groups_Show_Meta_Fields_Admin')){
             $this->plugin_name = $plugin_name;
         }
         public function wdm_has_dependencies() {
-            if ( is_admin() && current_user_can( 'activate_plugins' ) &&  (!is_plugin_active( 'woo-checkout-field-editor-pro/checkout-form-designer.php') || (!is_plugin_active('wdm-customization/wdm-customization.php')))) {
+            if ( is_admin() && current_user_can( 'activate_plugins' ) &&  (!is_plugin_active('wdm-customization/wdm-customization.php'))) {
                 add_action( 'admin_notices',array( $this, 'wdm_admin_notice' ), 10, 0);
 
                 deactivate_plugins( $this->plugin_name ); 
@@ -25,7 +25,7 @@ if(!class_exists('WDM_Groups_Show_Meta_Fields_Admin')){
             ?><div class="error"><p><?php _e( 'Sorry, but WDM Groups Show Meta Fields Plugin requires the Checkout Field Editor for WooCommerce and WDM Customization both plugins to be installed and active.' ); ?></p></div><?php
         }
         public function wdm_add_email_order_meta_fields( $fields, $sent_to_admin, $order ) {
-            $order_id = THWCFD_Utils::get_order_id( $order );
+            $order_id = $order->ID;
             $group_arr = get_post_meta( $order_id, 'inmedwdm_user_register_group', true );
             $val = 0;
             foreach( $group_arr as $key => $value ){
