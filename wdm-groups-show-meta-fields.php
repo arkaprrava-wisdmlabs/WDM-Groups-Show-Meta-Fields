@@ -13,20 +13,46 @@
  */
 if(!class_exists('WDM_Groups_Show_Meta_Fields')){
     class WDM_Groups_Show_Meta_Fields{
+        /**
+         * defines plugin directory path
+         *
+         * @var [type]
+         */
         protected $plugin_dir_path;
+        /**
+         * defines plugin name
+         *
+         * @var [type]
+         */
         protected $plugin_name;
+        /**
+         * defines class variables
+         *
+         * @param [type] $plugin_dir_path
+         * @param [type] $plugin_name
+         */
         public function __construct($plugin_dir_path, $plugin_name){
             $this->plugin_dir_path = $plugin_dir_path;
             $this->plugin_name = $plugin_name;
             $this->define_admin_hooks();
             $this->define_public_hooks();
         }
+        /**
+         * defines admin hooks
+         *
+         * @return void
+         */
         public function define_admin_hooks(){
             require_once $this->plugin_dir_path.'admin\class-wdm-groups-show-meta-fields-admin.php';
             $admin = new WDM_Groups_Show_Meta_Fields_Admin($this->plugin_name);
             add_action( 'admin_init',array( $admin, 'wdm_has_dependencies' ) , 10, 0);
             add_action( 'woocommerce_email_order_meta_fields', array( $admin, 'wdm_add_email_order_meta_fields' ), 20, 3 );
         }
+        /**
+         * defines public hooks
+         *
+         * @return void
+         */
         public function define_public_hooks(){
             require_once $this->plugin_dir_path.'public\class-wdm-groups-show-meta-fields-public.php';
             $public = new WDM_Groups_Show_Meta_Fields_Public();

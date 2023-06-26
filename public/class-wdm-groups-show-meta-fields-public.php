@@ -1,6 +1,12 @@
 <?php
 if(!class_exists('WDM_Groups_Show_Meta_Fields_Public')){
     class WDM_Groups_Show_Meta_Fields_Public{
+        /**
+         * show custom fields value in the order received thank you page
+         *
+         * @param [type] $order
+         * @return void
+         */
         public function wdm_show_custom_fields($order){
             $order_id = $order -> ID;
             $group_arr = get_post_meta( $order_id, 'inmedwdm_user_register_group', true );
@@ -15,6 +21,14 @@ if(!class_exists('WDM_Groups_Show_Meta_Fields_Public')){
                 echo $out;
             }
         }
+        /**
+         * changes the demo fields options
+         *
+         * @param [type] $args
+         * @param [type] $key
+         * @param [type] $value
+         * @return void
+         */
         public function wdm_change_demo_field_options( $args, $key, $value ){
             foreach ( WC()->cart->get_cart() as $cart_item ) {
                 $product_in_cart = $cart_item['product_id'];
