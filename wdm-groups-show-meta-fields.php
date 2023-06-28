@@ -16,20 +16,20 @@ if(!class_exists('WDM_Groups_Show_Meta_Fields')){
         /**
          * defines plugin directory path
          *
-         * @var [type]
+         * @var [String]
          */
         protected $plugin_dir_path;
         /**
          * defines plugin name
          *
-         * @var [type]
+         * @var [String]
          */
         protected $plugin_name;
         /**
-         * defines class variables
+         * defines class variables of WDM_Groups_Show_Meta_Fields
          *
-         * @param [type] $plugin_dir_path
-         * @param [type] $plugin_name
+         * @param [String] $plugin_dir_path
+         * @param [String] $plugin_name
          */
         public function __construct($plugin_dir_path, $plugin_name){
             $this->plugin_dir_path = $plugin_dir_path;

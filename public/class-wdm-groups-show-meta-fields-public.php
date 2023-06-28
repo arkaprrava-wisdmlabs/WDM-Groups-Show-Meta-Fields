@@ -4,7 +4,7 @@ if(!class_exists('WDM_Groups_Show_Meta_Fields_Public')){
         /**
          * show custom fields value in the order received thank you page
          *
-         * @param [type] $order
+         * @param [Array] $order
          * @return void
          */
         public function wdm_show_custom_fields($order){
@@ -22,33 +22,40 @@ if(!class_exists('WDM_Groups_Show_Meta_Fields_Public')){
             }
         }
         /**
-         * changes the demo fields options
+         * changes the demo fields options in cart checkout page
          *
-         * @param [type] $args
-         * @param [type] $key
-         * @param [type] $value
-         * @return void
+         * @param [Array] $args
+         * @param [String] $key
+         * @param [Mix] $value
+         * @return $args
          */
         public function wdm_change_demo_field_options( $args, $key, $value ){
-            foreach ( WC()->cart->get_cart() as $cart_item ) {
-                $product_in_cart = $cart_item['product_id'];
-                $product_variation_in_cart = $cart_item['variation_id'];
-                $reflector = new \ReflectionClass('InmedWDM_Checkout_Function');
-                $inmedwdm = $reflector->newInstanceWithoutConstructor();
-                if ( empty( $product_variation_in_cart ) ) {
-                    $chk_custom_field_mapping = $inmedwdm->inmedwdm_get_custom_field_enabled( $product_in_cart );
-                    if ( ! empty( $chk_custom_field_mapping ) && ! empty( $chk_custom_field_mapping['related_course'] ) && ! empty( $chk_custom_field_mapping['chk_custom_field'] ) ) {
-                        $chk_custom_field = $chk_custom_field_mapping['chk_custom_field'];
-                        if($key === 'chk_custom_fields_'.$chk_custom_field ){
-                            unset($args['options'][0]);
+            $cart_items = WC()->cart->get_cart();
+            if(!empty($cart_items)){
+                foreach ( WC()->cart->get_cart() as $cart_item ) {
+                    $product_in_cart = $cart_item['product_id'];
+                    $product_variation_in_cart = $cart_item['variation_id'];
+                    $reflector = new \ReflectionClass('InmedWDM_Checkout_Function');
+                    $inmedwdm = $reflector->newInstanceWithoutConstructor();
+                    if ( empty( $product_variation_in_cart ) ) {
+                        $chk_custom_field_mapping = $inmedwdm->inmedwdm_get_custom_field_enabled( $product_in_cart );
+                        if ( ! empty( $chk_custom_field_mapping ) && ! empty( $chk_custom_field_mapping['related_course'] ) && ! empty( $chk_custom_field_mapping['chk_custom_field'] ) ) {
+                            $chk_custom_field = $chk_custom_field_mapping['chk_custom_field'];
+                            if($key === 'chk_custom_fields_'.$chk_custom_field ){
+                                if(isset($args['options'][0])){
+                                    unset($args['options'][0]);
+                                }
+                            }
                         }
-                    }
-                } else {
-                    $chk_custom_field_mapping = $this->inmedwdm_get_custom_field_enabled( $product_variation_in_cart );
-                    if ( ! empty( $chk_custom_field_mapping ) && ! empty( $chk_custom_field_mapping['related_course'] ) && ! empty( $chk_custom_field_mapping['chk_custom_field'] ) ) {
-                        $chk_custom_field = $chk_custom_field_mapping['chk_custom_field'];
-                        if($key === 'chk_custom_fields_'.$chk_custom_field ){
-                            unset($args['options'][0]);
+                    } else {
+                        $chk_custom_field_mapping = $this->inmedwdm_get_custom_field_enabled( $product_variation_in_cart );
+                        if ( ! empty( $chk_custom_field_mapping ) && ! empty( $chk_custom_field_mapping['related_course'] ) && ! empty( $chk_custom_field_mapping['chk_custom_field'] ) ) {
+                            $chk_custom_field = $chk_custom_field_mapping['chk_custom_field'];
+                            if($key === 'chk_custom_fields_'.$chk_custom_field ){
+                                if(isset($args['options'][0])){
+                                    unset($args['options'][0]);
+                                }
+                            }
                         }
                     }
                 }
